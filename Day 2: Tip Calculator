@@ -1,0 +1,18 @@
+#If the bill was $87.96, split between 4 people, with 12% tip. 
+#Each person should pay (87.96/4) * 1.12 = 24.63
+#Round the result to 2 decimal places.
+
+print("Welcome to the tip calculator!") 
+bill = float(input("What was the total bill? $")) # float because bill will have decimals
+tip = int(input("How much tip would you like to give? 10, 12, or 15? "))
+people = int(input("How many people to split the bill? "))
+#remember to give it a variable such as bill, tip, people or else it won't go anywhere
+
+
+tip_as_percent = tip / 100  #this will give 0.12
+total_tip_amount = bill * tip_as_percent  #87.96 * 0.12 = 10.5552
+total_bill = bill + total_tip_amount  #87.96 + 10.5552 = 98.5152
+bill_per_person = total_bill / people   #98.5152/4 = 24.6288
+final_amount = round(bill_per_person, 2)  #24.63
+final_amount = "{:.2f}".format(bill_per_person)#note the  # inserted will give you the desired numbers
+print(f"Each person should pay: ${final_amount}") #f-string goes before "" and {} for function you want to name
