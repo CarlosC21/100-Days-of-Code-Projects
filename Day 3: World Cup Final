@@ -1,0 +1,26 @@
+print('''
+         ,
+     -   \O                                     ,  .-.___
+   -     /\                                   O/  /xx\XXX
+  -   __/\ `                                  /\  |xx|XXX|
+     `    \, ()                              ` << |xx|XXX|
+ jgs^^^^^^^^`^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+''')
+print("Welcome to the World Cup Final.")
+print("The game is tied and you have the last chance of the game to avoid going to penalties.") 
+
+choice1 = input("You receive the ball in the center of the field. Do you dribble left or right? Type 'left' or 'right'. \n").lower()#will make all letters lowercase
+if choice1 == "left": #continues in the game if true
+  choice2 = input("You have a teammate open and you see space to keep dribbling. Do you pass or dribble. Type 'pass' or 'dribble'. \n").lower()#apostraphe in you've add \ so it ignores apostraphe
+  if choice2 == "dribble":
+    choice3 = input("You\'ve dribbled and now find yourself at the edge of the keeper box and you have a clear shot. You have a clear shot but one of your strikers is begging you for a pass. Do you take the glory or give it to your striker. Type 'glory' or 'pass'.  \n").lower()
+    if choice3 == "glory":
+      print("You launched the ball to the stands and become an embarrassment for your country. Bye.")
+    elif choice3 == "pass":
+      print("Your teammate flicked it up and scored a beautiful bicycle kick. Good job champs.")
+    else:
+      print("You froze and fainted. Game Over.")
+  else:
+    print("Your teammate is brutally tackled and loses the ball. Game Over")
+else:
+  print("You twist your ankle and your opponent scores a wonder goal.")
