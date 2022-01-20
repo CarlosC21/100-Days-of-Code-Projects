@@ -1,0 +1,107 @@
+from replit import clear #this is for you to not have to keep scrolling down to a new hangman drawing
+import random
+
+stages = ['''
+  +---+
+  |   |
+  O   |
+ /|\  |
+ / \  |
+      |
+=========
+''', '''
+  +---+
+  |   |
+  O   |
+ /|\  |
+ /    |
+      |
+=========
+''', '''
+  +---+
+  |   |
+  O   |
+ /|\  |
+      |
+      |
+=========
+''', '''
+  +---+
+  |   |
+  O   |
+ /|   |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+  |   |
+      |
+      |
+=========
+''', '''
+  +---+
+  |   |
+  O   |
+      |
+      |
+      |
+=========
+''', '''
+  +---+
+  |   |
+      |
+      |
+      |
+      |
+=========
+''']
+
+from hangman_words import word_list
+
+chosen_word = random.choice(word_list)#python choosing what word will be used 
+word_length = len(chosen_word)#length of the word chosed
+
+end_of_game = False 
+lives = 6
+
+from hangman_art import logo #this is the logo at the beginning of the game
+print(logo)
+
+print(f'Pssst, the solution is {chosen_word}.')# you can chose to comment this out. used helpful when building program
+
+display = []
+for _ in range(word_length): #gives the number of _ depending # of letters
+    display += "_"
+
+while not end_of_game: #will keep populating as until lives run out
+    guess = input("Guess a letter: ").lower()
+    
+    clear()
+
+    if guess in display:#letting user know guess has already been used
+      print(f"You've already guessed {guess}")  
+
+    for position in range(word_length):#displays guess
+        letter = chosen_word[position]
+        #print(f"Current position: {position}\n Current letter: {letter}\n Guessed letter: {guess}")
+        if letter == guess:
+            display[position] = letter
+
+    if guess not in chosen_word:#when you guess a wrong letter
+        print(f"You guessed {guess}, that's not in the word. You lose a life.")
+
+        lives -= 1#notice indentation, user loses life
+        if lives == 0:#if loses 6 lives
+            end_of_game = True#end of game will be true and program ends
+            print("You lose")
+
+    print(f"{' '.join(display)}")
+
+    if "_" not in display:#if there's no _ it means users guessed all the letters
+        end_of_game = True #which makes the program end as user has won 
+        print("You win")
+
+    from hangman_art import stages
+    print(stages[lives])
