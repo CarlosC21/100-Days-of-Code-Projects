@@ -1,4 +1,4 @@
-#website where you can create your own ASCII
+#website where you can create your own ASCII http://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20
 from random import randint
 from art import logo
 #global scope
