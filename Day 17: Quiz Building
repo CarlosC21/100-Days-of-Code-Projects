@@ -1,0 +1,91 @@
+# main.py file
+from question_model import Question
+from data import question_data
+from quiz_brain import QuizBrain
+
+question_bank = []
+for question in question_data:
+    question_text = question["question"]
+    question_answer = question["correct_answer"]
+    new_question = Question(question_text, question_answer)
+    question_bank.append(new_question)
+
+quiz = QuizBrain(question_bank)
+
+while quiz.still_has_questions():
+    quiz.next_question()
+
+print("You've completed the quiz")
+print(f"Your final score was: {quiz.score}/{quiz.question_number}")
+
+# question_model.py file
+class Question:
+
+    def __init__(self, q_text, q_answer):
+        self.text = q_text
+        self.answer = q_answer
+
+new_q = Question("yes", "False")
+print(new_q.text)
+
+# data.py file 
+question_data = [
+    {"category": "Entertainment: Film",
+     "type": "boolean",
+     "difficulty": "easy",
+     "question": "The movie,The Nightmare before Christmas; was all done with physical objects.",
+     "correct_answer": "True", "incorrect_answers": ["False"]
+     },
+    {"category": "Entertainment: Film", "type": "boolean", "difficulty": "medium",
+     "question": "The colour of the pills in the Matrix were Blue and Yellow.", "correct_answer": "False",
+     "incorrect_answers": ["True"]}, {"category": "Entertainment: Film", "type": "boolean", "difficulty": "easy",
+                                      "question": "In the original script of &quot;The Matrix&quot;, the machines used humans as additional computing power instead of batteries.",
+                                      "correct_answer": "True", "incorrect_answers": ["False"]},
+    {"category": "Entertainment: Film", "type": "boolean", "difficulty": "easy",
+     "question": "Ewan McGregor did not know the name of the second prequel film of Star Wars during and after filming.",
+     "correct_answer": "True", "incorrect_answers": ["False"]},
+    {"category": "Entertainment: Film", "type": "boolean", "difficulty": "easy",
+     "question": "Samuel L. Jackson had the words, &#039;Bad Motherf*cker&#039; in-scripted on his lightsaber during the filming of Star Wars.",
+     "correct_answer": "True", "incorrect_answers": ["False"]},
+    {"category": "Entertainment: Film", "type": "boolean", "difficulty": "hard",
+     "question": "&quot;Cube&quot;, &quot;Cube 2: Hypercube&quot; and &quot;Cube Zero&quot; were directed by the same person.",
+     "correct_answer": "False", "incorrect_answers": ["True"]},
+    {"category": "Entertainment: Film", "type": "boolean", "difficulty": "medium",
+     "question": "Sean Connery wasn&#039;t in &quot;Indiana Jones and the Kingdom of the Crystal Skull&quot; because he found retirement too enjoyable.",
+     "correct_answer": "True", "incorrect_answers": ["False"]},
+    {"category": "Entertainment: Film", "type": "boolean", "difficulty": "easy",
+     "question": "&quot;Minions&quot; was released on the June 10th, 2015.", "correct_answer": "False",
+     "incorrect_answers": ["True"]}, {"category": "Entertainment: Film", "type": "boolean", "difficulty": "hard",
+                                      "question": "The weapon Clint Eastwood uses in &quot;Dirty Harry&quot; was a .44 Automag.",
+                                      "correct_answer": "False", "incorrect_answers": ["True"]},
+    {"category": "Entertainment: Film", "type": "boolean", "difficulty": "hard",
+     "question": "YouTube personality Jenna Marbles served as an executive producer of the film Maximum Ride (2016).",
+     "correct_answer": "True", "incorrect_answers": ["False"]}
+]
+
+# quiz_brain.py file
+class QuizBrain:
+
+    def __init__(self, q_list):
+        self.question_number = 0
+        self.score = 0
+        self.question_list = q_list
+
+    def still_has_questions(self):
+        return self.question_number < len(self.question_list)
+
+    def next_question(self):
+        current_question = self.question_list[self.question_number]
+        self.question_number += 1
+        user_answer = input(f"Q.{self.question_number}: {current_question.text} (True/False): ")
+        self.check_answer(user_answer, current_question.answer)
+
+    def check_answer(self, user_answer, correct_answer):
+        if user_answer.lower() == correct_answer.lower():
+            self.score += 1
+            print("You got it right!")
+        else:
+            print("That's wrong")
+        print(f"The correct answer was: {correct_answer}")
+        print(f"Your current score is: {self.score}/{self.question_number}")
+        print("\n")
