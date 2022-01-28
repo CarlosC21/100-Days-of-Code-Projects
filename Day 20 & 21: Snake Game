@@ -32,14 +32,15 @@ while game_is_on:
         scoreboard.increase_score()
 
     if snake.head.xcor() > 280 or snake.head.xcor() < -280 or snake.head. ycor() > 280 or snake.head.ycor() < -280:
-        game_is_on = False
-        scoreboard.game_over()
+        scoreboard.reset()
+        snake.reset()
 
-    for segment in snake.segments[1:]:
-        if snake.head.distance(segment) < 10:
-            game_is_on = False
-            scoreboard.game_over()
-
+    for segment in snake.segments:
+        if segment == snake.head:
+            pass
+        elif snake.head.distance(segment) < 10:
+            scoreboard.reset()
+            snake.reset()
 
 screen.exitonclick()
 
@@ -53,6 +54,7 @@ class Scoreboard(Turtle):
     def __init__(self):
         super().__init__()
         self.score = 0
+        self.high_score = 0
         self.color("white")
         self.penup()
         self.goto(0, 270)
@@ -60,15 +62,17 @@ class Scoreboard(Turtle):
         self.update_scoreboard()
 
     def update_scoreboard(self):
-        self.write(f"Score: {self.score}", align = ALIGNMENT, font = FONT)
-
-    def game_over(self):
-        self.goto(0, 0)
-        self.write("GAME OVER", align = ALIGNMENT, font = FONT)
+        self.clear
+        self.write(f"Score: {self.score} High Score: {self.high_score}", align = ALIGNMENT, font = FONT)
+        
+    def reset(self):
+        if self.score > self.high_score:
+            self.high_score = self.score
+        self.score = 0 
+        self.update_scoreboard()
 
     def increase_score(self):
         self.score += 1
-        self.clear()
         self.update_scoreboard()
         
 # snake file
@@ -96,6 +100,13 @@ class Snake:
         new_segment.penup()
         new_segment.goto(position)
         self.segments.append(new_segment)
+        
+    def reset(self):
+        for seg in self.segments:
+            seg.goto(1000, 1000)
+        self.segments.clear()
+        self.create_snake()
+        self.head = self.segments[0]
 
     def extend(self):
         self.add_segment(self.segments[-1].position())
